@@ -33,6 +33,11 @@ namespace Presupuesto
                            .AllowAnyHeader()
                            .AllowAnyMethod()
                            .AllowCredentials();
+
+                        builder.WithOrigins("https://presup.azurewebsites.net/")
+                           .AllowAnyHeader()
+                           .AllowAnyMethod()
+                           .AllowCredentials();
                     }
                     );
             });
