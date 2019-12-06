@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Presupuesto.Models;
+using Presupuesto.Utils;
 
 namespace Presupuesto.Controllers
 {
@@ -25,44 +26,79 @@ namespace Presupuesto.Controllers
         // GET: api/Detalle
         [HttpGet]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult<IEnumerable<Detalle>>> GetDetalle(int analisisId=0, int itemId=0)
+        public async Task<IActionResult> GetDetalle(int analisisId=0, int itemId=0)
         {
-            var List = await _context.Detalle.ToListAsync();
-            if(analisisId != 0)
+            var response = new ListResponse<Detalle>();
+
+            try
             {
-                List = await _context.Detalle.Where(d => d.AnalisisUnitarioId.Equals(analisisId)).ToListAsync();
+                var List = await _context.Detalle.ToListAsync();
+                if (analisisId != 0)
+                {
+                    List = await _context.Detalle.Where(d => d.AnalisisUnitarioId.Equals(analisisId)).ToListAsync();
+                }
+                if (itemId != 0)
+                {
+                    List = await _context.Detalle.Where(d => d.ItemId.Equals(itemId)).ToListAsync();
+                }
+                response.Model = List;
+                response.Message = "Lista de Detalles";
             }
-            if (itemId != 0)
+            catch (Exception ex)
             {
-                List = await _context.Detalle.Where(d => d.ItemId.Equals(itemId)).ToListAsync();
+                response.DidError = true;
+                response.ErrorMessage = ex.ToString();
             }
-            return List;
+            return response.ToHttpResponse();            
         }
 
         // GET api/Detalle/5
         [HttpGet("{id}")]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult<Detalle>> GetDetalleById(int id)
+        public async Task<IActionResult> GetDetalleById(int id)
         {
-            var Detalle = await _context.Detalle.FindAsync(id);
+            var response = new SingleResponse<Detalle>();
 
-            if (Detalle == null)
+            try
             {
-                return NotFound();
-            }
+                var Detalle = await _context.Detalle.FindAsync(id);
 
-            return Detalle;
+                if (Detalle == null)
+                {
+                    return NotFound();
+                }
+
+                response.Message = $"Detalle {id}";
+                response.Model = Detalle;
+            }
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = ex.ToString();
+            }
+            return response.ToHttpResponse();
         }
 
         // POST api/Detalle
         [HttpPost]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult<Detalle>> PostDetalle(Detalle Detalle)
+        public async Task<IActionResult> PostDetalle(Detalle Detalle)
         {
-            _context.Add(Detalle);
-            await _context.SaveChangesAsync();
+            var response = new SingleResponse<Detalle>();
+            try
+            {
+                _context.Add(Detalle);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetDetalleById), new { id = Detalle.Id }, Detalle);
+                response.Message = "Created";
+                response.Model = CreatedAtAction(nameof(GetDetalleById), new { id = Detalle.Id }, Detalle).Value as Detalle;
+            }
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = ex.ToString();
+            }
+            return response.ToHttpResponse();
         }
 
         // PUT api/Detalle/5
@@ -70,14 +106,25 @@ namespace Presupuesto.Controllers
         [EnableCors("AllowOrigin")]
         public async Task<IActionResult> PutDetalle(int id, Detalle Detalle)
         {
-            if (id != Detalle.Id)
-            {
-                return BadRequest();
-            }
-            _context.Entry(Detalle).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            var response = new Response();
 
-            return NoContent();
+            try
+            {
+                if (id != Detalle.Id)
+                {
+                    return BadRequest();
+                }
+                _context.Entry(Detalle).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                response.Message = "Updated";
+            }
+
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = ex.ToString();
+            }
+            return response.ToHttpResponse();
         }
 
         // DELETE api/<controller>/5

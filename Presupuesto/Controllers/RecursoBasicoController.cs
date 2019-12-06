@@ -17,7 +17,7 @@ namespace Presupuesto.Controllers
     public class RecursoBasicoController : ControllerBase
     {
         private readonly PresupuestoContext _context;
-        
+
 
         public RecursoBasicoController(PresupuestoContext context)
         {
@@ -28,14 +28,51 @@ namespace Presupuesto.Controllers
         // GET: api/RecursoBasico
         // Params: filter 
         [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult<Paginator<RecursoBasico>>> GetRecursoBasico(string filter,
-                                                                                     int page= 1)
+        public async Task<IActionResult> GetRecursoBasico(string filter, int page = 1)
         {
-            List<RecursoBasico> _RecursoBasico;
+            var response = new PagedResponse<RecursoBasico>();
+
+            try
+            {
+                List<RecursoBasico> _RecursoBasico = await _context.RecursoBasico.ToListAsync();
+                if (!string.IsNullOrEmpty(filter))
+                {
+                    foreach (var item in filter.Split(new char[] { ' ' },
+                        StringSplitOptions.RemoveEmptyEntries))
+
+                        _RecursoBasico = _RecursoBasico
+                            .Where(x => x.Codigo.StartsWith(item) ||
+                                        x.Descripcion.Contains(item)).ToList();
+                }
+
+                response.CurrentFilter = filter;
+                response.CurrentPage = page;
+                response.RegisterPerPages = Constants.NPages;
+                response.TotalRegister = _RecursoBasico.Count();
+                response.TotalPages = (int)Math.Ceiling((double) response.TotalRegister / Constants.NPages);
+
+                _RecursoBasico = _RecursoBasico.Skip((page - 1) * Constants.NPages)
+                                            .Take(Constants.NPages)
+                                            .OrderBy(x => x.Codigo)
+                                            .OrderBy(x => x.Descripcion)
+                                            .ToList();
+                response.Model = _RecursoBasico;
+                response.Message = string.Format("Page {0} of {1}, Total of products: {2}.", response.CurrentPage, response.TotalPages, response.TotalRegister);
+            }
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = "There was an internal error, please contact to technical support.";
+            }
+
+            return response.ToHttpResponse();
+            /*List<RecursoBasico> _RecursoBasico;
             Paginator<RecursoBasico> _PaginadorRecursoBasico;
 
-            _RecursoBasico = _context.RecursoBasico.ToList();
+            _RecursoBasico = await _context.RecursoBasico.ToListAsync();
 
             //Filtering
 
@@ -74,32 +111,50 @@ namespace Presupuesto.Controllers
 
             };
 
-            return _PaginadorRecursoBasico;
+            return _PaginadorRecursoBasico;*/
         }
 
         // GET api/RecursoBasico/5
         [HttpGet("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult<RecursoBasico>> GetRecursoBasicoById(int id)
+        public async Task<IActionResult> GetRecursoBasicoById(int id)
         {
-            var recursoBasico = await _context.RecursoBasico.FindAsync(id);
-            if (recursoBasico == null)
+            SingleResponse<RecursoBasico> response = new SingleResponse<RecursoBasico>();
+            try
             {
-                return NotFound();
+                response.Model = await _context.RecursoBasico.FindAsync(id);
             }
-
-            return recursoBasico;
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = string.Format("There was an internal error, please contact to technical support. {0}", ex.Message);
+            }
+            return response.ToHttpResponse();
         }
 
         // POST api/RecursoBasico
         [HttpPost]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult<RecursoBasico>> PostRecursoBasico(RecursoBasico recursoBasico)
+        public async Task<IActionResult> PostRecursoBasico(RecursoBasico recursoBasico)
         {
-            _context.Add(recursoBasico);
-            await _context.SaveChangesAsync();
+            SingleResponse<RecursoBasico> response = new SingleResponse<RecursoBasico>();
+            try
+            {
+                _context.Add(recursoBasico);
+                await _context.SaveChangesAsync();
+                response.Model = CreatedAtAction(nameof(GetRecursoBasicoById), new { id = recursoBasico.Id }, recursoBasico).Value as RecursoBasico;
+            }
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = string.Format("There was an internal error, please contact to technical support. {0}", ex.Message);
+            }
+            return response.ToHttpResponse();           
 
-            return CreatedAtAction(nameof(GetRecursoBasicoById), new { id = recursoBasico.Id }, recursoBasico);
+            
         }
 
         // PUT api/RecursoBasico/5
@@ -107,14 +162,24 @@ namespace Presupuesto.Controllers
         [EnableCors("AllowOrigin")]
         public async Task<IActionResult> PutRecursoBasico(int id, RecursoBasico recursoBasico)
         {
-            if(id != recursoBasico.Id)
+            Response response = new Response();
+            try
             {
-                return BadRequest();
+                if (id != recursoBasico.Id)
+                {
+                    return BadRequest();
+                }
+                _context.Entry(recursoBasico).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
             }
-            _context.Entry(recursoBasico).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = string.Format("There was an internal error, please contact to technical support. {0}", ex.Message);
+            }
+            return response.ToHttpResponse();           
 
-            return NoContent();
+            
         }
 
         // DELETE api/<controller>/5

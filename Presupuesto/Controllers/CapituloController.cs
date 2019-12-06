@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Presupuesto.Models;
+using Presupuesto.Utils;
 
 namespace Presupuesto.Controllers
 {
@@ -23,36 +25,71 @@ namespace Presupuesto.Controllers
         // GET: api/Capitulo
         [HttpGet]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult<IEnumerable<Capitulo>>> GetCapitulo(int proyectoId)
+        public async Task<IActionResult> GetCapitulo(int proyectoId)
         {
-            List < Capitulo > Capitulos = await _context.Capitulo.Where(x => x.ProyectoId.Equals(proyectoId)).ToListAsync();
-            return Capitulos;
+            var response = new ListResponse<Capitulo>();
+            try
+            {
+                List<Capitulo> Capitulos = await _context.Capitulo
+                    .Where(x => x.ProyectoId.Equals(proyectoId))
+                    .OrderBy(x => x.Numero).ToListAsync();
+                response.Message = "Lista Capitulos";
+                response.Model = Capitulos;
+            }
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = ex.ToString();
+            }
+            return response.ToHttpResponse();
+            
         }
 
         // GET api/Capitulo/5
         [HttpGet("{id}")]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult<Capitulo>> GetCapituloById(int id)
+        public async Task<IActionResult> GetCapituloById(int id)
         {
-            var Capitulo = await _context.Capitulo.FindAsync(id);
-
-            if (Capitulo == null)
+            var response = new SingleResponse<Capitulo>();
+            try
             {
-                return NotFound();
-            }
+                var Capitulo = await _context.Capitulo.FindAsync(id);
 
-            return Capitulo;
+                if (Capitulo == null)
+                {
+                    return NotFound();
+                }
+                response.Model = Capitulo;
+            }
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = ex.ToString();
+            }
+            return response.ToHttpResponse();
         }
 
         // POST api/Capitulo
         [HttpPost]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult<Capitulo>> PostCapitulo(Capitulo Capitulo)
+        public async Task<IActionResult> PostCapitulo(Capitulo Capitulo)
         {
-            _context.Add(Capitulo);
-            await _context.SaveChangesAsync();
+            var response = new SingleResponse<Capitulo>();
+            try
+            {
+                _context.Add(Capitulo);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetCapituloById), new { id = Capitulo.Id }, Capitulo);
+                response.Message = "Created";
+                response.Model = CreatedAtAction(nameof(GetCapituloById), new { id = Capitulo.Id }, Capitulo).Value as Capitulo;
+                
+            }
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = ex.ToString();
+            }
+            return response.ToHttpResponse();
         }
 
         // PUT api/Capitulo/5
@@ -60,14 +97,24 @@ namespace Presupuesto.Controllers
         [EnableCors("AllowOrigin")]
         public async Task<IActionResult> PutCapitulo(int id, Capitulo Capitulo)
         {
-            if (id != Capitulo.Id)
+            var response = new Response();
+            try
             {
-                return BadRequest();
+                if (id != Capitulo.Id)
+                {
+                    return BadRequest();
+                }
+                _context.Entry(Capitulo).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                response.Message = "Updated";
             }
-            _context.Entry(Capitulo).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = ex.ToString();
+            }
+            return response.ToHttpResponse();
+            
         }
 
         // DELETE api/<controller>/5

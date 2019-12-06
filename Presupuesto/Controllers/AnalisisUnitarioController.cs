@@ -19,13 +19,56 @@ namespace Presupuesto.Controllers
 
         public AnalisisUnitarioController(PresupuestoContext context)
         {
-            _context = context;            
+            _context = context;
         }
         // GET: api/AnalisisUnitario        
         [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult<Paginator<AnalisisUnitario>>> GetAnalisisUnitario(int proyectoId, string filter, int page=1)
+        public async Task<IActionResult> GetAnalisisUnitario(int proyectoId, string filter, int page = 1)
         {
+            var response = new PagedResponse<AnalisisUnitario>();
+
+            try
+            {
+                List<AnalisisUnitario> _AnalisisUnitario;
+
+                _AnalisisUnitario = await _context.AnalisisUnitario
+                    .Where(x => x.ProyectoId.Equals(proyectoId)).ToListAsync();
+
+                if (!string.IsNullOrEmpty(filter))
+                {
+                    foreach (string item in filter.Split(new char[] { ' ' },
+                        StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        _AnalisisUnitario = _AnalisisUnitario
+                            .Where(x => x.Codigo.StartsWith(item) ||
+                                        x.Descripcion.Contains(item)).ToList();
+                    }
+                }
+
+                _AnalisisUnitario = _AnalisisUnitario.Skip((page - 1) * Constants.NPages)
+                                                .Take(Constants.NPages)
+                                                .OrderBy(x => x.Codigo)
+                                                .OrderBy(x => x.Descripcion)
+                                                .ToList();
+
+                response.CurrentFilter = filter;
+                response.CurrentPage = page;
+                response.RegisterPerPages = Constants.NPages;
+                response.TotalRegister = _AnalisisUnitario.Count();
+                response.TotalPages = (int)Math.Ceiling((double)response.TotalRegister / Constants.NPages);
+                response.Model = _AnalisisUnitario;
+            }
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = ex.ToString();
+            }
+
+            return response.ToHttpResponse();
+            /*
             List<AnalisisUnitario> _AnalisisUnitario;
             Paginator<AnalisisUnitario> _PaginadorAnalisisUnitario;
 
@@ -70,40 +113,73 @@ namespace Presupuesto.Controllers
             };
 
             return _PaginadorAnalisisUnitario;
+            */
         }
 
         // GET api/AnalisisUnitario/5        
         [HttpGet("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult<AnalisisUnitario>> GetAnalisisUnitarioById(int id)
+        public async Task<IActionResult> GetAnalisisUnitarioById(int id)
         {
-            var analisisUnitario = await _context.AnalisisUnitario.FindAsync(id);
+            SingleResponse<AnalisisUnitario> response = new SingleResponse<AnalisisUnitario>();
 
-            if (analisisUnitario == null)
+            try
             {
-                return NotFound();
+                var analisisUnitario = await _context.AnalisisUnitario.FindAsync(id);
+
+                if (analisisUnitario == null)
+                {
+                    return NotFound();
+                }
+                response.Model = analisisUnitario;
             }
-            // analisisUnitario.Detalles = await _context.Detalle.Where(x => x.AnalisisUnitarioId.Equals(id)).ToListAsync();
-            return analisisUnitario;
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = ex.ToString();
+            }
+
+            return response.ToHttpResponse();
         }
 
         // POST api/AnalisisUnitario        
         [HttpPost]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult<AnalisisUnitario>> PostAnalisisUnitario(AnalisisUnitario analisisUnitario)
+        public async Task<IActionResult> PostAnalisisUnitario(AnalisisUnitario analisisUnitario)
         {
-            _context.Add(analisisUnitario);
-            await _context.SaveChangesAsync();
+            SingleResponse<AnalisisUnitario> response = new SingleResponse<AnalisisUnitario>();
 
-            return CreatedAtAction(nameof(GetAnalisisUnitarioById), new { id = analisisUnitario.Id }, analisisUnitario);
+            try
+            {
+                _context.Add(analisisUnitario);
+                await _context.SaveChangesAsync();
+                response.Model = CreatedAtAction(nameof(GetAnalisisUnitarioById), new { id = analisisUnitario.Id }, analisisUnitario).Value as AnalisisUnitario;                
+            }
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = ex.ToString();
+            }
+
+            return response.ToHttpResponse();
         }
 
         // PUT api/AnalisisUnitario/5
         [HttpPut("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
         [EnableCors("AllowOrigin")]
         public async Task<IActionResult> PutAnalisisUnitario(int id, AnalisisUnitario analisisUnitario)
         {
-            if(analisisUnitario.Id != id)
+            if (analisisUnitario.Id != id)
             {
                 return BadRequest();
             }

@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Presupuesto.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Cors;
+using Presupuesto.Utils;
+
 
 namespace Presupuesto.Controllers
 {
@@ -23,51 +25,96 @@ namespace Presupuesto.Controllers
         //GET: api/Proyecto
         [HttpGet]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult<IEnumerable<Proyecto>>> GetProyecto()
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetProyecto()
         {
-            return await _context.Proyecto.ToListAsync();
+            ListResponse<Proyecto> response = new ListResponse<Proyecto>();
+            try
+            {
+                response.Model = await _context.Proyecto.ToListAsync();
+                response.Message = "Lista de Proyectos";
+            }
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = string.Format("There was an internal error, please contact to technical support. {0}", ex.Message);
+            }
+            return response.ToHttpResponse();
         }
 
         //GET: api/Proyecto/5
         [HttpGet("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult<Proyecto>> GetProyectoById(int id)
+        public async Task<IActionResult> GetProyectoById(int id)
         {
-            var proyecto = await _context.Proyecto.FindAsync(id);
-
-            if (proyecto == null)
+            SingleResponse<Proyecto> response = new SingleResponse<Proyecto>();
+            try
             {
-                return NotFound();
+                response.Model = await _context.Proyecto.FindAsync(id);                
             }
-
-            return proyecto;
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = string.Format("There was an internal error, please contact to technical support. {0}", ex.Message);
+            }
+            return response.ToHttpResponse();            
         }
 
         //POST: api/Proyecto
         [HttpPost]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult<Proyecto>> PostProyecto(Proyecto proyecto)
+        public async Task<IActionResult> PostProyecto(Proyecto proyecto)
         {
-            _context.Proyecto.Add(proyecto);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetProyectoById), new { id = proyecto.Id }, proyecto);
+            SingleResponse<Proyecto> response = new SingleResponse<Proyecto>();
+            try
+            {
+                _context.Proyecto.Add(proyecto);
+                await _context.SaveChangesAsync();
+                response.Model = CreatedAtAction(nameof(GetProyectoById), new { id = proyecto.Id }, proyecto).Value as Proyecto;                
+            }
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = string.Format("There was an internal error, please contact to technical support. {0}", ex.Message);
+            }
+            return response.ToHttpResponse();
+            
         }
 
         //PUT: api/Proyecto/5
         [HttpPut("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
         [EnableCors("AllowOrigin")]
         public async Task<IActionResult> PutProyecto(int id, Proyecto proyecto)
         {
-            if(id != proyecto.Id)
+            Response response = new Response();
+            try
             {
-                return BadRequest();
+                if (id != proyecto.Id)
+                {
+                    return BadRequest();
+                }
+                _context.Entry(proyecto).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
             }
-
-            _context.Entry(proyecto).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = ex.Message;
+                
+            }
+            return response.ToHttpResponse();
+            
         }
 
     }
