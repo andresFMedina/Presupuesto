@@ -95,26 +95,32 @@ namespace Presupuesto.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         [EnableCors("AllowOrigin")]
-        public async Task<IActionResult> PutProyecto(int id, Proyecto proyecto)
+        public async Task<IActionResult> PutProyecto(int id, [FromBody] Proyecto value)
         {
             Response response = new Response();
             try
             {
-                if (id != proyecto.Id)
-                {
-                    return BadRequest();
-                }
-                _context.Entry(proyecto).State = EntityState.Modified;
+                Proyecto updatedProyecto = value;
+                var selectedElement = _context.Proyecto.Find(id);
+                selectedElement.Comentarios = value.Comentarios;
+                selectedElement.Contratante = value.Contratante;
+                selectedElement.Desperdicio_Materiales = value.Desperdicio_Materiales;
+                selectedElement.Fecha_Modificacion = value.Fecha_Modificacion;
+                selectedElement.Fecha_Presentacion = value.Fecha_Presentacion;
+                selectedElement.Nombre_Obra = value.Nombre_Obra;
+                selectedElement.Porcentaje_Menor = value.Porcentaje_Menor;
+                selectedElement.Porcentaje_Prestaciones_Sociales = value.Porcentaje_Prestaciones_Sociales;
+                selectedElement.Proponente = value.Proponente;                
                 await _context.SaveChangesAsync();
+
             }
             catch (Exception ex)
             {
                 response.DidError = true;
-                response.ErrorMessage = ex.Message;
-                
+                response.ErrorMessage = ex.ToString();
             }
+
             return response.ToHttpResponse();
-            
         }
 
     }

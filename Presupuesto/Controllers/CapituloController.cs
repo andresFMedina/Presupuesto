@@ -95,26 +95,25 @@ namespace Presupuesto.Controllers
         // PUT api/Capitulo/5
         [HttpPut("{id}")]
         [EnableCors("AllowOrigin")]
-        public async Task<IActionResult> PutCapitulo(int id, Capitulo Capitulo)
+        public async Task<IActionResult> PutCapitulo(int id, [FromBody] Capitulo value)
         {
-            var response = new Response();
+            Response response = new Response();
             try
             {
-                if (id != Capitulo.Id)
-                {
-                    return BadRequest();
-                }
-                _context.Entry(Capitulo).State = EntityState.Modified;
+                Capitulo updatedCapitulo = value;
+                var selectedElement = _context.Capitulo.Find(id);
+                selectedElement.Numero = value.Numero;
+                selectedElement.Descripcion = value.Descripcion;                
                 await _context.SaveChangesAsync();
-                response.Message = "Updated";
+
             }
             catch (Exception ex)
             {
                 response.DidError = true;
                 response.ErrorMessage = ex.ToString();
             }
+
             return response.ToHttpResponse();
-            
         }
 
         // DELETE api/<controller>/5

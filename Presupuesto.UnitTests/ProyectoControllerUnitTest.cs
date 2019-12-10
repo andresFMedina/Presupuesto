@@ -105,7 +105,7 @@ namespace Presupuesto.UnitTests
             dbContext.Dispose();
 
 
-            Assert.Equal("The instance of entity type 'Proyecto' cannot be tracked because another instance with the same key value for {'Id'} is already being tracked. When attaching exist", value.ErrorMessage);
+            Assert.False(value.DidError);
         }
 
 

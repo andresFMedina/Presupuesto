@@ -160,26 +160,27 @@ namespace Presupuesto.Controllers
         // PUT api/RecursoBasico/5
         [HttpPut("{id}")]
         [EnableCors("AllowOrigin")]
-        public async Task<IActionResult> PutRecursoBasico(int id, RecursoBasico recursoBasico)
+        public async Task<IActionResult> PutRecursoBasico(int id, [FromBody] RecursoBasico value)
         {
             Response response = new Response();
             try
             {
-                if (id != recursoBasico.Id)
-                {
-                    return BadRequest();
-                }
-                _context.Entry(recursoBasico).State = EntityState.Modified;
+                RecursoBasico updatedRecursoBasico = value;
+                var selectedElement = _context.RecursoBasico.Find(id);
+                selectedElement.Codigo = value.Codigo;
+                selectedElement.Descripcion = value.Descripcion;
+                selectedElement.Unidad = value.Unidad;
+                selectedElement.Precio = value.Precio;                
                 await _context.SaveChangesAsync();
+
             }
             catch (Exception ex)
             {
                 response.DidError = true;
-                response.ErrorMessage = string.Format("There was an internal error, please contact to technical support. {0}", ex.Message);
+                response.ErrorMessage = ex.ToString();
             }
-            return response.ToHttpResponse();           
 
-            
+            return response.ToHttpResponse();
         }
 
         // DELETE api/<controller>/5

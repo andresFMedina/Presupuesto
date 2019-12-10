@@ -46,7 +46,7 @@ namespace Presupuesto.UnitTests
 
             AnalisisUnitario analisis = new AnalisisUnitario
             {
-                Id = 3,
+                Id = 5,
                 Codigo = "54643",
                 Descripcion = "Descripcion",                
                 ProyectoId = 4,
@@ -68,14 +68,14 @@ namespace Presupuesto.UnitTests
 
             AnalisisUnitario analisis = new AnalisisUnitario
             {
-                Id = 2,
+                Id = 4,
                 Codigo = "54643",
                 Descripcion = "Descripcion 1",
                 ProyectoId = 4,
                 Unidad = "M2",
                 ValorUnitario = 645900
             };
-            int id = 2;
+            int id = 4;
             ObjectResult response = await controller.PutAnalisisUnitario(id, analisis) as ObjectResult;
             var value = response.Value as Response;
 

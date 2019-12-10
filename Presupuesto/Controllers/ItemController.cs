@@ -172,27 +172,30 @@ namespace Presupuesto.Controllers
         // PUT api/Item/5
         [HttpPut("{id}")]
         [EnableCors("AllowOrigin")]
-        public async Task<IActionResult> PutItem(int id, Item item)
+        public async Task<IActionResult> PutItem(int id, [FromBody] Item value)
         {
-            var response = new Response();
-
+            Response response = new Response();
             try
             {
-                if (id != item.Id)
-                {
-                    return BadRequest();
-                }
-                _context.Entry(item).State = EntityState.Modified;
+                Item updatedItem = value;
+                var selectedElement = _context.Item.Find(id);
+                selectedElement.Codigo = value.Codigo;
+                selectedElement.Descripcion = value.Descripcion;
+                selectedElement.Unidad = value.Unidad;
+                selectedElement.ValorUnitario = value.ValorUnitario;
+                selectedElement.Cantidad = value.Cantidad;
+                selectedElement.NumeroCapitulo = value.NumeroCapitulo;
+                selectedElement.CapituloId = value.CapituloId;
                 await _context.SaveChangesAsync();
-                response.Message = "Updated";
+
             }
             catch (Exception ex)
             {
                 response.DidError = true;
                 response.ErrorMessage = ex.ToString();
             }
-            return response.ToHttpResponse();
 
+            return response.ToHttpResponse();
         }
 
         // DELETE api/<controller>/5

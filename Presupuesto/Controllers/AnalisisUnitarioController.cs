@@ -177,17 +177,26 @@ namespace Presupuesto.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         [EnableCors("AllowOrigin")]
-        public async Task<IActionResult> PutAnalisisUnitario(int id, AnalisisUnitario analisisUnitario)
+        public async Task<IActionResult> PutAnalisisUnitario(int id, [FromBody] AnalisisUnitario value)
         {
-            if (analisisUnitario.Id != id)
+            Response response = new Response();
+            try {
+                AnalisisUnitario updatedAnalisisUnitario = value;
+                var selectedElement = _context.AnalisisUnitario.Find(id);
+                selectedElement.Codigo = value.Codigo;
+                selectedElement.Descripcion = value.Descripcion;
+                selectedElement.Unidad = value.Unidad;
+                selectedElement.ValorUnitario = value.ValorUnitario;
+                await _context.SaveChangesAsync();
+
+            }
+            catch (Exception ex)
             {
-                return BadRequest();
+                response.DidError = true;
+                response.ErrorMessage = ex.ToString();
             }
 
-            _context.Entry(analisisUnitario).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return response.ToHttpResponse();
         }
 
         // DELETE api/<controller>/5

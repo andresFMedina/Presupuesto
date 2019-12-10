@@ -75,10 +75,9 @@ namespace Presupuesto.UnitTests
             var dbContext = DbContextMocker.GetPresupuestoDbContext(nameof(TestPutRecursoBasicoAsync));
             var controller = new RecursoBasicoController(dbContext);
 
-            int id = 3000;
+            int id = 1;
             var RecursoBasico = new RecursoBasico
-            {
-                Id = 3000,
+            {                
                 Codigo = "56589",
                 Descripcion = "Recurso 3000",
                 Precio = 68930,
@@ -92,7 +91,7 @@ namespace Presupuesto.UnitTests
             dbContext.Dispose();
 
 
-            Assert.Equal("The instance of entity type 'RecursoBasico' cannot be tracked because another instance with the same key value for {'Id'} is already being tracked. When attaching exist", value.ErrorMessage);
+            Assert.False(value.DidError);
         }
 
 

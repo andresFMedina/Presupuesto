@@ -104,7 +104,27 @@ namespace Presupuesto.UnitTests
                 Id = 2,
                 Codigo = "54643",
                 Descripcion = "Descripcion",
-                ProyectoId = 2,
+                ProyectoId = 4,
+                Unidad = "M2",
+                ValorUnitario = 645900
+            });
+
+            dbContext.AnalisisUnitario.Add(new AnalisisUnitario
+            {
+                Id = 3,
+                Codigo = "54643",
+                Descripcion = "Descripcion",
+                ProyectoId = 4,
+                Unidad = "M2",
+                ValorUnitario = 645900
+            });
+
+            dbContext.AnalisisUnitario.Add(new AnalisisUnitario
+            {
+                Id = 4,
+                Codigo = "54643",
+                Descripcion = "Descripcion",
+                ProyectoId = 4,
                 Unidad = "M2",
                 ValorUnitario = 645900
             });
@@ -208,7 +228,23 @@ namespace Presupuesto.UnitTests
                 Descripcion = "Costo Indirecto 2",
                 Porcentaje = (float)0.12,
             });
+            dbContext.RecursoBasico.Add(new RecursoBasico
+            {
+                Id = 1,
+                Codigo = "56589",
+                Descripcion = "Recurso 3000",
+                Precio = 68930,
+                Unidad = "UND"
+            });
 
+            dbContext.RecursoBasico.Add(new RecursoBasico
+            {
+                Id = 2,
+                Codigo = "56589",
+                Descripcion = "Recurso 3000",
+                Precio = 9865,
+                Unidad = "UND"
+            });
 
 
             dbContext.SaveChanges();

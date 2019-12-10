@@ -115,27 +115,25 @@ namespace Presupuesto.Controllers
         // PUT api/CostoIndirecto/5
         [HttpPut("{id}")]
         [EnableCors("AllowOrigin")]
-        public async Task<IActionResult> PutCostoIndirecto(int id, CostoIndirecto costoIndirecto)
+        public async Task<IActionResult> PutCostoIndirecto(int id, [FromBody] CostoIndirecto value)
         {
-            var response = new Response();
-
+            Response response = new Response();
             try
             {
-                if (id != costoIndirecto.Id)
-                {
-                    return BadRequest();
-                }
-                _context.Entry(costoIndirecto).State = EntityState.Modified;
+                CostoIndirecto updatedCostoIndirecto = value;
+                var selectedElement = _context.CostoIndirecto.Find(id);                
+                selectedElement.Descripcion = value.Descripcion;
+                selectedElement.Porcentaje = value.Porcentaje;                
                 await _context.SaveChangesAsync();
-                response.Message = "Updated";
+
             }
             catch (Exception ex)
             {
                 response.DidError = true;
                 response.ErrorMessage = ex.ToString();
             }
-            return response.ToHttpResponse();           
-            
+
+            return response.ToHttpResponse();
         }
 
         // DELETE api/<controller>/5
