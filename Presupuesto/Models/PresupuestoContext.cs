@@ -29,12 +29,7 @@ namespace Presupuesto.Models
 
             base.OnModelCreating(modelBuilder);
 
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.EnableSensitiveDataLogging();            
-        }
+        }       
 
     }
 }
