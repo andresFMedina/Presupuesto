@@ -34,10 +34,10 @@ namespace Presupuesto
                            .AllowAnyMethod()
                            .AllowCredentials();
 
-                        builder.WithOrigins("https://presup.azurewebsites.net")
+                        /*builder.WithOrigins("https://presup.azurewebsites.net")
                            .AllowAnyHeader()
                            .AllowAnyMethod()
-                           .AllowCredentials();
+                           .AllowCredentials();*/
                     }
                     );
             });
