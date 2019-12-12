@@ -46,12 +46,12 @@ namespace Presupuesto
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("AllowOrigin");
             app.UseOptions();                        
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseCors("AllowOrigin");
+                app.UseDeveloperExceptionPage();                
             }         
 
             app.UseHttpsRedirection();
