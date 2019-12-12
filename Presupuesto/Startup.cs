@@ -47,13 +47,13 @@ namespace Presupuesto
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseOptions();
+            app.UseCors("AllowOrigin");
+            app.UseDeveloperExceptionPage();
 
-            if (env.IsDevelopment())
+            /*if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
-
-            app.UseCors("AllowOrigin");
+            }   */        
 
             app.UseHttpsRedirection();
 
