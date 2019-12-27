@@ -45,7 +45,7 @@ namespace Presupuesto.Controllers
 
                         _Item = _Item
                             .Where(x => x.Codigo.StartsWith(item) ||
-                                        x.Descripcion.Contains(item)).ToList();
+                                        x.Descripcion.ToLowerInvariant().Contains(item.ToLowerInvariant())).ToList();
                 }
 
                 //Pagination

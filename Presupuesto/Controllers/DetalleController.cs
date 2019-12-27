@@ -115,7 +115,8 @@ namespace Presupuesto.Controllers
                 selectedElement.Descripcion = value.Descripcion;
                 selectedElement.Unidad = value.Unidad;
                 selectedElement.Precio = value.Precio;
-                selectedElement.Rendimiento = value.Rendimiento;                
+                selectedElement.Rendimiento = value.Rendimiento;
+                selectedElement.Desperdicio = value.Desperdicio;
                 await _context.SaveChangesAsync();
 
             }

@@ -45,7 +45,7 @@ namespace Presupuesto.Controllers
 
                         _RecursoBasico = _RecursoBasico
                             .Where(x => x.Codigo.StartsWith(item) ||
-                                        x.Descripcion.Contains(item)).ToList();
+                                        x.Descripcion.ToLowerInvariant().Contains(item.ToLowerInvariant())).ToList();
                 }
 
                 response.CurrentFilter = filter;
@@ -69,49 +69,6 @@ namespace Presupuesto.Controllers
             }
 
             return response.ToHttpResponse();
-            /*List<RecursoBasico> _RecursoBasico;
-            Paginator<RecursoBasico> _PaginadorRecursoBasico;
-
-            _RecursoBasico = await _context.RecursoBasico.ToListAsync();
-
-            //Filtering
-
-            if (!string.IsNullOrEmpty(filter))
-            {
-                foreach (var item in filter.Split(new char[] { ' ' },
-                    StringSplitOptions.RemoveEmptyEntries))
-
-                    _RecursoBasico = _RecursoBasico
-                        .Where(x => x.Codigo.StartsWith(item) ||
-                                    x.Descripcion.Contains(item)).ToList();
-            }
-
-            //Pagination
-            int _TotalRegister = 0;
-            int _TotalPages = 0;
-
-            _TotalRegister = _RecursoBasico.Count();
-
-            _RecursoBasico = _RecursoBasico.Skip((page - 1) * Constants.NPages)
-                                            .Take(Constants.NPages)
-                                            .OrderBy(x => x.Codigo)
-                                            .OrderBy(x => x.Descripcion)
-                                            .ToList();
-
-            _TotalPages = (int)Math.Ceiling((double)_TotalRegister / Constants.NPages);
-
-            _PaginadorRecursoBasico = new Paginator<RecursoBasico>()
-            {
-                RegisterPerPages = Constants.NPages,
-                TotalRegister = _TotalRegister,
-                TotalPages = _TotalPages,
-                CurrentPage = page,
-                CurrentFilter = filter,
-                Result = _RecursoBasico
-
-            };
-
-            return _PaginadorRecursoBasico;*/
         }
 
         // GET api/RecursoBasico/5

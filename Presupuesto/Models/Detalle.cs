@@ -20,7 +20,9 @@ namespace Presupuesto.Models
         public string Unidad { get; set; }
         public int Precio { get; set; }
         public float Rendimiento { get; set; }
-        public string DetalleDe { get; set; } 
+        public float Desperdicio { get; set; }
+        public string DetalleDe { get; set; }
+
         
     }
 }
