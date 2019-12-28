@@ -14,7 +14,7 @@ namespace Presupuesto.Models
         [Required]
         public string Descripcion { get; set; }
         public string Unidad { get; set; }
-        public Grupo Grupo { get; set; }
+        public string Grupo { get; set; }
         public string Clasificacion { get; set; }
         public long Precio { get; set; }
         public string Fecha { get; set; }

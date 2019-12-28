@@ -8,8 +8,7 @@ namespace Presupuesto.Models
         : base(options)
         { }
         public DbSet<AnalisisUnitario> AnalisisUnitario { get; set; }
-        public DbSet<CostoIndirecto> CostoIndirecto { get; set; }
-        public DbSet<Grupo> Grupo { get; set; }
+        public DbSet<CostoIndirecto> CostoIndirecto { get; set; }        
         public DbSet<Item> Item { get; set; }
         public DbSet<Proyecto> Proyecto { get; set; }
         public DbSet<RecursoBasico> RecursoBasico { get; set; }

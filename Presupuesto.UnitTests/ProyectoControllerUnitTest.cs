@@ -59,8 +59,7 @@ namespace Presupuesto.UnitTests
                 Contratante = "Contratante6",
                 Desperdicio_Materiales = 60,
                 Fecha_Modificacion = DateTime.Today.ToShortDateString(),
-                Fecha_Presentacion = DateTime.Today.AddDays(200).ToShortDateString(),
-                Grupos = null,
+                Fecha_Presentacion = DateTime.Today.AddDays(200).ToShortDateString(),                
                 Porcentaje_Menor = 6,
                 Porcentaje_Prestaciones_Sociales = 63,
                 Proponente = "Proponente 6"
@@ -91,8 +90,7 @@ namespace Presupuesto.UnitTests
                 Contratante = "Contratante6",
                 Desperdicio_Materiales = 60,
                 Fecha_Modificacion = DateTime.Today.ToShortDateString(),
-                Fecha_Presentacion = DateTime.Today.AddDays(200).ToShortDateString(),
-                Grupos = null,
+                Fecha_Presentacion = DateTime.Today.AddDays(200).ToShortDateString(),                
                 Porcentaje_Menor = 5,
                 Porcentaje_Prestaciones_Sociales = 63,
                 Proponente = "Proponente 6"

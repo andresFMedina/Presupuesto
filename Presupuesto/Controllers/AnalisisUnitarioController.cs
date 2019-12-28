@@ -44,7 +44,7 @@ namespace Presupuesto.Controllers
                     {
                         _AnalisisUnitario = _AnalisisUnitario
                             .Where(x => x.Codigo.StartsWith(item) ||
-                                        x.Descripcion.Contains(item)).ToList();
+                                        x.Descripcion.ToLower().Contains(item.ToLower())).ToList();
                     }
                 }
 
@@ -67,53 +67,7 @@ namespace Presupuesto.Controllers
                 response.ErrorMessage = ex.ToString();
             }
 
-            return response.ToHttpResponse();
-            /*
-            List<AnalisisUnitario> _AnalisisUnitario;
-            Paginator<AnalisisUnitario> _PaginadorAnalisisUnitario;
-
-            _AnalisisUnitario = _context.AnalisisUnitario
-                .Where(x => x.ProyectoId.Equals(proyectoId)).ToList();
-
-            //Filtering
-
-            if (!string.IsNullOrEmpty(filter))
-            {
-                foreach (var item in filter.Split(new char[] { ' ' },
-                    StringSplitOptions.RemoveEmptyEntries))
-
-                    _AnalisisUnitario = _AnalisisUnitario
-                        .Where(x => x.Codigo.StartsWith(item) ||
-                                    x.Descripcion.Contains(item)).ToList();
-            }
-
-            //Pagination
-            int _TotalRegister = 0;
-            int _TotalPages = 0;
-
-            _TotalRegister = _AnalisisUnitario.Count();
-
-            _AnalisisUnitario = _AnalisisUnitario.Skip((page - 1) * Constants.NPages)
-                                            .Take(Constants.NPages)
-                                            .OrderBy(x => x.Codigo)
-                                            .OrderBy(x => x.Descripcion)
-                                            .ToList();
-
-            _TotalPages = (int)Math.Ceiling((double)_TotalRegister / Constants.NPages);
-
-            _PaginadorAnalisisUnitario = new Paginator<AnalisisUnitario>()
-            {
-                RegisterPerPages = Constants.NPages,
-                TotalRegister = _TotalRegister,
-                TotalPages = _TotalPages,
-                CurrentPage = page,
-                CurrentFilter = filter,
-                Result = _AnalisisUnitario
-
-            };
-
-            return _PaginadorAnalisisUnitario;
-            */
+            return response.ToHttpResponse();            
         }
 
         // GET api/AnalisisUnitario/5        
@@ -187,6 +141,7 @@ namespace Presupuesto.Controllers
                 selectedElement.Descripcion = value.Descripcion;
                 selectedElement.Unidad = value.Unidad;
                 selectedElement.ValorUnitario = value.ValorUnitario;
+                selectedElement.Grupo = value.Grupo;
                 await _context.SaveChangesAsync();
 
             }

@@ -21,7 +21,9 @@ namespace Presupuesto.Models
         public int Precio { get; set; }
         public float Rendimiento { get; set; }
         public float Desperdicio { get; set; }
+        public string Grupo { get; set; }
         public string DetalleDe { get; set; }
+
 
         
     }

@@ -29,7 +29,6 @@ namespace Presupuesto.Models
         [Required]
         public float Porcentaje_Prestaciones_Sociales { get; set; }
         [Required]
-        public float Desperdicio_Materiales { get; set; }        
-        public List<Grupo> Grupos { get; set; }
+        public float Desperdicio_Materiales { get; set; }                
     }
 }

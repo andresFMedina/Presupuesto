@@ -117,6 +117,7 @@ namespace Presupuesto.Controllers
                 selectedElement.Precio = value.Precio;
                 selectedElement.Rendimiento = value.Rendimiento;
                 selectedElement.Desperdicio = value.Desperdicio;
+                selectedElement.Grupo = value.Grupo;
                 await _context.SaveChangesAsync();
 
             }
