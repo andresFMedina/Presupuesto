@@ -13,13 +13,11 @@ namespace Presupuesto.UnitTests
             {
                 Id = 1,
                 Comentarios = "Comentarios1",
-                Contratante = "Contratante1",
-                Desperdicio_Materiales = 80,
+                Contratante = "Contratante1",                
                 Fecha_Modificacion = DateTime.Today.ToShortDateString(),
                 Fecha_Presentacion = DateTime.Today.AddDays(100).ToShortDateString(),                
                 Nombre_Obra = "Obra1",
-                Porcentaje_Menor = 80,
-                Porcentaje_Prestaciones_Sociales = 50,
+                Porcentaje_Menor = 80,                
                 Proponente = "Proponente1" 
             }
             );
@@ -28,13 +26,11 @@ namespace Presupuesto.UnitTests
             {
                 Id = 2,
                 Comentarios = "Comentarios2",
-                Contratante = "Contratante2",
-                Desperdicio_Materiales = 70,
+                Contratante = "Contratante2",                
                 Fecha_Modificacion = DateTime.Today.ToShortDateString(),
                 Fecha_Presentacion = DateTime.Today.AddDays(150).ToShortDateString(),                
                 Nombre_Obra = "Obra2",
-                Porcentaje_Menor = 30,
-                Porcentaje_Prestaciones_Sociales = 10,
+                Porcentaje_Menor = 30,                
                 Proponente = "Proponente2"
             }
             );
@@ -43,13 +39,11 @@ namespace Presupuesto.UnitTests
             {
                 Id = 3,
                 Comentarios = "Comentarios3",
-                Contratante = "Contratante3",
-                Desperdicio_Materiales = 80,
+                Contratante = "Contratante3",                
                 Fecha_Modificacion = DateTime.Today.ToShortDateString(),
                 Fecha_Presentacion = DateTime.Today.AddDays(100).ToShortDateString(),                
                 Nombre_Obra = "Obra3",
-                Porcentaje_Menor = 40,
-                Porcentaje_Prestaciones_Sociales = 50,
+                Porcentaje_Menor = 40,                
                 Proponente = "Proponente3"
             }
             );
@@ -58,13 +52,11 @@ namespace Presupuesto.UnitTests
             {
                 Id = 4,
                 Comentarios = "Comentarios4",
-                Contratante = "Contratante4",
-                Desperdicio_Materiales = 75,
+                Contratante = "Contratante4",                
                 Fecha_Modificacion = DateTime.Today.ToShortDateString(),
                 Fecha_Presentacion = DateTime.Today.AddDays(200).ToShortDateString(),                
                 Nombre_Obra = "Obra4",
-                Porcentaje_Menor = 60,
-                Porcentaje_Prestaciones_Sociales = 15,
+                Porcentaje_Menor = 60,                
                 Proponente = "Proponente4"
             }
             );
@@ -73,13 +65,11 @@ namespace Presupuesto.UnitTests
             {
                 Id = 5,
                 Comentarios = "Comentarios5",
-                Contratante = "Contratante5",
-                Desperdicio_Materiales = 80,
+                Contratante = "Contratante5",                
                 Fecha_Modificacion = DateTime.Today.ToShortDateString(),
                 Fecha_Presentacion = DateTime.Today.AddDays(100).ToShortDateString(),                
                 Nombre_Obra = "Obra5",
-                Porcentaje_Menor = 80,
-                Porcentaje_Prestaciones_Sociales = 50,
+                Porcentaje_Menor = 80,                
                 Proponente = "Proponente5"
             }
             );

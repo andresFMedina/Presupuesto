@@ -11,10 +11,10 @@ namespace Presupuesto.Models
         public int Id { get; set; }                
         public int? AnalisisUnitarioId { get; set; }
         [ForeignKey("AnalisisUnitarioId")]
-        public virtual AnalisisUnitario? AnalisisUnitario { get; set; }                        
+        public virtual AnalisisUnitario AnalisisUnitario { get; set; }                        
         public int? ItemId { get; set; }
         [ForeignKey("ItemId")]
-        public virtual Item? Item { get; set; }
+        public virtual Item Item { get; set; }
         public string Codigo { get; set; }
         public string Descripcion { get; set; }
         public string Unidad { get; set; }

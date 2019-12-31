@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Presupuesto.Models;
 
 namespace Presupuesto.Migrations
 {
     [DbContext(typeof(PresupuestoContext))]
-    partial class PresupuestoContextModelSnapshot : ModelSnapshot
+    [Migration("20191229200709_ChangesToProyecto")]
+    partial class ChangesToProyecto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -173,8 +175,8 @@ namespace Presupuesto.Migrations
                     b.Property<int>("Aporte")
                         .HasColumnType("int");
 
-                    b.Property<float>("Cantidad")
-                        .HasColumnType("real");
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int");
 
                     b.Property<int?>("CapituloId")
                         .HasColumnType("int");

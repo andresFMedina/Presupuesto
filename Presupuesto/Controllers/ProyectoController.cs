@@ -103,13 +103,11 @@ namespace Presupuesto.Controllers
                 Proyecto updatedProyecto = value;
                 var selectedElement = _context.Proyecto.Find(id);
                 selectedElement.Comentarios = value.Comentarios;
-                selectedElement.Contratante = value.Contratante;
-                selectedElement.Desperdicio_Materiales = value.Desperdicio_Materiales;
+                selectedElement.Contratante = value.Contratante;                
                 selectedElement.Fecha_Modificacion = value.Fecha_Modificacion;
                 selectedElement.Fecha_Presentacion = value.Fecha_Presentacion;
                 selectedElement.Nombre_Obra = value.Nombre_Obra;
-                selectedElement.Porcentaje_Menor = value.Porcentaje_Menor;
-                selectedElement.Porcentaje_Prestaciones_Sociales = value.Porcentaje_Prestaciones_Sociales;
+                selectedElement.Porcentaje_Menor = value.Porcentaje_Menor;                
                 selectedElement.Proponente = value.Proponente;                
                 await _context.SaveChangesAsync();
 

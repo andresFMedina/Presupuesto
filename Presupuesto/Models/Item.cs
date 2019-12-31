@@ -15,7 +15,7 @@ namespace Presupuesto.Models
         public string Codigo { get; set; }
         public string Descripcion { get; set; }
         public string Unidad { get; set; }
-        public int Cantidad { get; set; }
+        public float Cantidad { get; set; }
         // Temporal mientras se define si es un Objeto//
         public int Frente { get; set; }
         ///////////////////////////////////////////////

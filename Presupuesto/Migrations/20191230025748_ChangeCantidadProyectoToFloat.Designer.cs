@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Presupuesto.Models;
 
 namespace Presupuesto.Migrations
 {
     [DbContext(typeof(PresupuestoContext))]
-    partial class PresupuestoContextModelSnapshot : ModelSnapshot
+    [Migration("20191230025748_ChangeCantidadProyectoToFloat")]
+    partial class ChangeCantidadProyectoToFloat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

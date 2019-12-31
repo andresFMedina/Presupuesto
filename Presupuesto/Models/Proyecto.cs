@@ -26,9 +26,5 @@ namespace Presupuesto.Models
         public string Comentarios { get; set; }
         [Required]
         public float Porcentaje_Menor { get; set; }
-        [Required]
-        public float Porcentaje_Prestaciones_Sociales { get; set; }
-        [Required]
-        public float Desperdicio_Materiales { get; set; }                
     }
 }

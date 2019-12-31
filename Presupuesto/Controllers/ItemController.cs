@@ -130,7 +130,7 @@ namespace Presupuesto.Controllers
         [EnableCors("AllowOrigin")]
         public async Task<IActionResult> GetCostoDirecto(int proyectoId)
         {
-            var response = new SingleResponse<int>();
+            var response = new SingleResponse<float>();
 
             try
             {

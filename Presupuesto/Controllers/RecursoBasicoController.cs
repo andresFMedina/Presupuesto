@@ -65,7 +65,7 @@ namespace Presupuesto.Controllers
             catch (Exception ex)
             {
                 response.DidError = true;
-                response.ErrorMessage = "There was an internal error, please contact to technical support.";
+                response.ErrorMessage = "There was an internal error, please contact to technical support. \n" + ex.ToString();
             }
 
             return response.ToHttpResponse();
