@@ -34,8 +34,8 @@ namespace Presupuesto.Controllers
             {
                 List<AnalisisUnitario> _AnalisisUnitario;
 
-                _AnalisisUnitario = await _context.AnalisisUnitario
-                    .Where(x => x.ProyectoId.Equals(proyectoId)).ToListAsync();
+                _AnalisisUnitario = await _context.AnalisisUnitario.ToListAsync();
+                    //.Where(x => x.ProyectoId.Equals(proyectoId)).ToListAsync();
 
                 if (!string.IsNullOrEmpty(filter))
                 {
