@@ -106,8 +106,7 @@ namespace Presupuesto.Controllers
                 selectedElement.Contratante = value.Contratante;                
                 selectedElement.Fecha_Modificacion = value.Fecha_Modificacion;
                 selectedElement.Fecha_Presentacion = value.Fecha_Presentacion;
-                selectedElement.Nombre_Obra = value.Nombre_Obra;
-                selectedElement.Porcentaje_Menor = value.Porcentaje_Menor;                
+                selectedElement.Nombre_Obra = value.Nombre_Obra;                                
                 selectedElement.Proponente = value.Proponente;                
                 await _context.SaveChangesAsync();
 

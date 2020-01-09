@@ -20,5 +20,9 @@ namespace Presupuesto.Models
         public string Clasificacion { get; set; }
         public long ValorUnitario { get; set; }
         public List<Detalle> Detalles { get; set; }
+
+        public int CostoMateriales { get; set; }
+        public int CostoEquipo { get; set; }
+        public int CostoManoObra { get; set; }
     }
 }

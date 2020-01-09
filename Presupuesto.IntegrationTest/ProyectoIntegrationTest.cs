@@ -47,7 +47,6 @@ namespace Presupuesto.IntegrationTest
                 Contratante = "Contratante6",                
                 Fecha_Modificacion = DateTime.Today.ToShortDateString(),
                 Fecha_Presentacion = DateTime.Today.AddDays(200).ToShortDateString(),                
-                Porcentaje_Menor = 6,                
                 Proponente = "Proponente 6"
             };
 
@@ -69,7 +68,6 @@ namespace Presupuesto.IntegrationTest
                 Contratante = "Contratante6",                
                 Fecha_Modificacion = DateTime.Today.ToShortDateString(),
                 Fecha_Presentacion = DateTime.Today.AddDays(200).ToShortDateString(),                
-                Porcentaje_Menor = 6,                
                 Proponente = "Proponente 6"
             };
 

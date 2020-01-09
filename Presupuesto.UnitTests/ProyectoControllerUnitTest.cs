@@ -58,8 +58,7 @@ namespace Presupuesto.UnitTests
                 Comentarios = "Comentarios6",
                 Contratante = "Contratante6",                
                 Fecha_Modificacion = DateTime.Today.ToShortDateString(),
-                Fecha_Presentacion = DateTime.Today.AddDays(200).ToShortDateString(),                
-                Porcentaje_Menor = 6,                
+                Fecha_Presentacion = DateTime.Today.AddDays(200).ToShortDateString(),                                         
                 Proponente = "Proponente 6"
             };
 
@@ -88,7 +87,6 @@ namespace Presupuesto.UnitTests
                 Contratante = "Contratante6",                
                 Fecha_Modificacion = DateTime.Today.ToShortDateString(),
                 Fecha_Presentacion = DateTime.Today.AddDays(200).ToShortDateString(),                
-                Porcentaje_Menor = 5,                
                 Proponente = "Proponente 6"
             };
 

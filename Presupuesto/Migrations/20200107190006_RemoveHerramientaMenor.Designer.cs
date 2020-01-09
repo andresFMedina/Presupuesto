@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Presupuesto.Models;
 
 namespace Presupuesto.Migrations
 {
     [DbContext(typeof(PresupuestoContext))]
-    partial class PresupuestoContextModelSnapshot : ModelSnapshot
+    [Migration("20200107190006_RemoveHerramientaMenor")]
+    partial class RemoveHerramientaMenor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,15 +33,6 @@ namespace Presupuesto.Migrations
 
                     b.Property<string>("Codigo")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CostoEquipo")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CostoManoObra")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CostoMateriales")
-                        .HasColumnType("int");
 
                     b.Property<string>("Descripcion")
                         .HasColumnType("nvarchar(max)");
@@ -69,15 +62,6 @@ namespace Presupuesto.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CostoEquipo")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CostoManoObra")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CostoMateriales")
-                        .HasColumnType("int");
 
                     b.Property<string>("Descripcion")
                         .HasColumnType("nvarchar(max)");
@@ -199,15 +183,6 @@ namespace Presupuesto.Migrations
 
                     b.Property<string>("Codigo")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CostoEquipo")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CostoManoObra")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CostoMateriales")
-                        .HasColumnType("int");
 
                     b.Property<string>("Descripcion")
                         .HasColumnType("nvarchar(max)");

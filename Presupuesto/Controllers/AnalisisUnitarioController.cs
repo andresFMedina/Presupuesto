@@ -142,6 +142,9 @@ namespace Presupuesto.Controllers
                 selectedElement.Unidad = value.Unidad;
                 selectedElement.ValorUnitario = value.ValorUnitario;
                 selectedElement.Grupo = value.Grupo;
+                selectedElement.CostoEquipo = value.CostoEquipo;
+                selectedElement.CostoManoObra = value.CostoManoObra;
+                selectedElement.CostoMateriales = value.CostoMateriales;
                 await _context.SaveChangesAsync();
 
             }

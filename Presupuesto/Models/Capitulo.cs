@@ -16,6 +16,9 @@ namespace Presupuesto.Models
         [ForeignKey("ProyectoId")]
         public virtual Proyecto Proyecto { get; set; }
         public int Subtotal { get; set; }
-        
+        public int CostoMateriales { get; set; }
+        public int CostoEquipo { get; set; }
+        public int CostoManoObra { get; set; }
+
     }
 }

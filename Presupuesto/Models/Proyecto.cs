@@ -24,7 +24,5 @@ namespace Presupuesto.Models
         public string Fecha_Modificacion { get; set; }
         [Required]
         public string Comentarios { get; set; }
-        [Required]
-        public float Porcentaje_Menor { get; set; }
     }
 }

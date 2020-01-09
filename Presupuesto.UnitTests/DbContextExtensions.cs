@@ -17,7 +17,6 @@ namespace Presupuesto.UnitTests
                 Fecha_Modificacion = DateTime.Today.ToShortDateString(),
                 Fecha_Presentacion = DateTime.Today.AddDays(100).ToShortDateString(),                
                 Nombre_Obra = "Obra1",
-                Porcentaje_Menor = 80,                
                 Proponente = "Proponente1" 
             }
             );
@@ -29,8 +28,7 @@ namespace Presupuesto.UnitTests
                 Contratante = "Contratante2",                
                 Fecha_Modificacion = DateTime.Today.ToShortDateString(),
                 Fecha_Presentacion = DateTime.Today.AddDays(150).ToShortDateString(),                
-                Nombre_Obra = "Obra2",
-                Porcentaje_Menor = 30,                
+                Nombre_Obra = "Obra2",                                
                 Proponente = "Proponente2"
             }
             );
@@ -42,8 +40,7 @@ namespace Presupuesto.UnitTests
                 Contratante = "Contratante3",                
                 Fecha_Modificacion = DateTime.Today.ToShortDateString(),
                 Fecha_Presentacion = DateTime.Today.AddDays(100).ToShortDateString(),                
-                Nombre_Obra = "Obra3",
-                Porcentaje_Menor = 40,                
+                Nombre_Obra = "Obra3",                                
                 Proponente = "Proponente3"
             }
             );
@@ -55,8 +52,7 @@ namespace Presupuesto.UnitTests
                 Contratante = "Contratante4",                
                 Fecha_Modificacion = DateTime.Today.ToShortDateString(),
                 Fecha_Presentacion = DateTime.Today.AddDays(200).ToShortDateString(),                
-                Nombre_Obra = "Obra4",
-                Porcentaje_Menor = 60,                
+                Nombre_Obra = "Obra4",                                
                 Proponente = "Proponente4"
             }
             );
@@ -69,7 +65,6 @@ namespace Presupuesto.UnitTests
                 Fecha_Modificacion = DateTime.Today.ToShortDateString(),
                 Fecha_Presentacion = DateTime.Today.AddDays(100).ToShortDateString(),                
                 Nombre_Obra = "Obra5",
-                Porcentaje_Menor = 80,                
                 Proponente = "Proponente5"
             }
             );

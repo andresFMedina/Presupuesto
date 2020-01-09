@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Presupuesto.Models;
 
 namespace Presupuesto.Migrations
 {
     [DbContext(typeof(PresupuestoContext))]
-    partial class PresupuestoContextModelSnapshot : ModelSnapshot
+    [Migration("20200107210926_AddCostsToItemAnalisisCapitulo")]
+    partial class AddCostsToItemAnalisisCapitulo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

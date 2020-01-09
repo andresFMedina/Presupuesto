@@ -103,7 +103,10 @@ namespace Presupuesto.Controllers
                 Capitulo updatedCapitulo = value;
                 var selectedElement = _context.Capitulo.Find(id);
                 selectedElement.Numero = value.Numero;
-                selectedElement.Descripcion = value.Descripcion;                
+                selectedElement.Descripcion = value.Descripcion;
+                selectedElement.CostoEquipo = value.CostoEquipo;
+                selectedElement.CostoManoObra = value.CostoManoObra;
+                selectedElement.CostoMateriales = value.CostoMateriales;
                 await _context.SaveChangesAsync();
 
             }

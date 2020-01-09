@@ -29,5 +29,8 @@ namespace Presupuesto.Models
         public int? CapituloId { get; set; }
         [ForeignKey("CapituloId")]
         public virtual Capitulo capitulo { get; set; }
+        public int CostoMateriales { get; set; }
+        public int CostoEquipo { get; set; }
+        public int CostoManoObra { get; set; }
     }
 }

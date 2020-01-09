@@ -186,6 +186,9 @@ namespace Presupuesto.Controllers
                 selectedElement.Cantidad = value.Cantidad;
                 selectedElement.NumeroCapitulo = value.NumeroCapitulo;
                 selectedElement.CapituloId = value.CapituloId;
+                selectedElement.CostoEquipo = value.CostoEquipo;
+                selectedElement.CostoManoObra = value.CostoManoObra;
+                selectedElement.CostoMateriales = value.CostoMateriales;
                 await _context.SaveChangesAsync();
 
             }
