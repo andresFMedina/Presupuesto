@@ -22,7 +22,7 @@ namespace Presupuesto
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContextPool<PresupuestoContext>(opt =>
-            opt.UseSqlServer(Configuration.GetConnectionString("PresupuestoDbConnection")));
+            opt.UseSqlServer(Configuration.GetConnectionString("PresupuestoDbConnectionLocal")));
             services.AddControllers();
             services.AddCors(options =>
             {

@@ -52,6 +52,47 @@ namespace Presupuesto.Controllers
             return response.ToHttpResponse();            
         }
 
+        // GET: api/Detalle/listado
+        [HttpGet("listado")]
+        [EnableCors("AllowOrigin")]
+        public async Task<IActionResult> GetListadoGeneralDetallePorProyecto(int proyectoId = 0)
+        {
+            var response = new ListResponse<Detalle>();
+
+            try
+            {
+                var List = await _context.Detalle.Where(d => d.Item.ProyectoId.Equals(proyectoId))
+                    .ToListAsync();
+
+                var ListAux = new List<Detalle>();
+
+                for(int i = 0; i < List.Count() ; i++)
+                {
+                    for(int j = 0; j < List.Count(); j++)
+                    {
+                        var detalleI = List.ElementAt(i);
+                        var detalleJ = List.ElementAt(j);
+
+                        if (detalleI.Codigo.Equals(detalleJ.Codigo))
+                        {
+                            detalleI.Rendimiento += detalleJ.Rendimiento;
+                            List.RemoveAt(j);
+                        }
+                    }
+                }               
+                
+                response.Model = List;
+                response.Message = "Lista de Detalles";
+            }
+            catch (Exception ex)
+            {
+                response.DidError = true;
+                response.ErrorMessage = ex.ToString();
+            }
+            return response.ToHttpResponse();
+        }
+
+
         // GET api/Detalle/5
         [HttpGet("{id}")]
         [EnableCors("AllowOrigin")]
