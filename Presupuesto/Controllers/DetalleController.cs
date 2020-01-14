@@ -70,14 +70,19 @@ namespace Presupuesto.Controllers
                 {
                     for(int j = 0; j < List.Count(); j++)
                     {
+                        
                         var detalleI = List.ElementAt(i);
                         var detalleJ = List.ElementAt(j);
-
-                        if (detalleI.Codigo.Equals(detalleJ.Codigo))
+                        if (!detalleI.Equals(detalleJ))
                         {
-                            detalleI.Rendimiento += detalleJ.Rendimiento;
-                            List.RemoveAt(j);
+                            if (detalleI.Codigo.Equals(detalleJ.Codigo))
+                            {
+                                detalleI.Rendimiento += detalleJ.Rendimiento;
+                                List[i] = detalleI;
+                                List.RemoveAt(j);
+                            }
                         }
+                        
                     }
                 }               
                 
